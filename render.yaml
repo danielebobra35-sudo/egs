@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: egs
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: node egs-server.js
+    healthCheckPath: /api/health
+    disk:
+      name: egs-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data/egs
+      - key: FILES_DIR
+        value: /var/data/egs-files
+      - key: TRUST_PROXY_HOPS
+        value: "1"
+      - key: SUBSCRIPTIONS_ENFORCED
+        value: "false"
+      - key: FLUTTERWAVE_PAYMENT_LINK
+        value: https://flutterwave.com/pay/pe0qxgwsgfci
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: PROMO_PEPPER
+        generateValue: true
+      - key: OWNER_EMAIL
+        sync: false
+      - key: OWNER_CODE
+        sync: false
